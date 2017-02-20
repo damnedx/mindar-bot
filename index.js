@@ -8,9 +8,16 @@ var server = http.createServer(function(request, response) {
   {
     console.log('parseResult');
     var parsed;
+    elements.movie.forEach(movie => {
+      console.log(movie);
+      // var json = {
+      //   originalTitle: movie.originalTitle,
+      //   title        : movie.title,
+      //   releaseDate  : search.getData(movie, "release.releaseDate");
+      // }
+    });
+    // var movie = search.getData(elements, 'movie');
 
-    console.log(data);
-    var x = data(elements ,"page");
     // return jsonObject({Films : data->films, Actors : data->castingShorts});
   }
 
@@ -27,17 +34,15 @@ var server = http.createServer(function(request, response) {
       if(error) { console.log('Error : '+ error); return; }
       
       result = results.feed;
-    });
 
-    var parsed;
-    setTimeout(test, 1000);
-    function test() {
+      var parsed;
       parsed = parseResult(result);
       insertData('db1',result)
       insertData('db2', parsed);
-    }
+
     return parsed;
 
+    });
   }
 
   processFilmData('star wars');
