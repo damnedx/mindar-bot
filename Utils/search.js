@@ -8,18 +8,18 @@ var search = function() {
         if (data == undefined || vars.length == 0) {
             return data;
         }
-        
+
 
         var needle = vars[0];
 
-        return recursiveVariableSearch(data[needle], vars.slice(1));
+        return this.recursiveVariableSearch(data[needle], vars.slice(1));
     }
 
     // Seeks a data in a "tree" object
     // Ex: bpm.data(usecase, 'feed.movie', 'no')
     this.getData = function (data, search, notFoundValue) {
         var tree  = search.split('.');
-        var found = recursiveVariableSearch(data, tree);
+        var found = this.recursiveVariableSearch(data, tree);
 
         if (found == undefined) {
             return notFoundValue;
@@ -27,4 +27,8 @@ var search = function() {
 
         return found;
     }
+
+		return this;
 }
+
+module.exports = new search();
