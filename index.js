@@ -1,40 +1,16 @@
-var http = require("http");
+var http     = require("http");
 var allocine = require('allocine-api');
+var search   = require('./Utils/search.js');
 
 var server = http.createServer(function(request, response) {
 
-    var recursiveVariableSearch = function (data, vars) {
-        // Catching PHP flavor :-°
-        if (data == null) {
-            data = undefined;
-        }
-
-        if (data == undefined || vars.length == 0) {
-            return data;
-        }
-
-        var needle = vars[0];
-
-        return recursiveVariableSearch(data[needle], vars.slice(1));
-    }
-
-    // Seeks a data in a "tree" object
-    // Ex: bpm.data(usecase, 'feed.movie', 'no')
-    data = function (data, search, notFoundValue) {
-        var tree  = search.split('.');
-        var found = recursiveVariableSearch(data, tree);
-
-        if (found == undefined) {
-            return notFoundValue;
-        }
-
-        return found;
-    }
-
-  function parseResult(data)
+  function parseResult(elements)
   {
     console.log('parseResult');
+    var parsed;
+
     console.log(data);
+    var x = data(elements ,"page");
     // return jsonObject({Films : data->films, Actors : data->castingShorts});
   }
 
@@ -64,7 +40,7 @@ var server = http.createServer(function(request, response) {
 
   }
 
-  processFilmData('spiderman');
+  processFilmData('star wars');
 
 });
 
