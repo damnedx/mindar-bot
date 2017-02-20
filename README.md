@@ -1,0 +1,1 @@
+#Mindar data grabbing
