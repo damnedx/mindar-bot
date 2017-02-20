@@ -1,0 +1,13 @@
+{
+	"name": "mindar-bot",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "mindar",
+	"repository": {
+		"type": "git",
+		"url" : "https://github.com/damnedx/mindar-bot.git"
+	},
+	"dependencies": {
+		"allocine-api": "0.1.9"
+	}
+}
