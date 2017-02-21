@@ -1,31 +1,39 @@
-var Http     = require("http");
+var Http     = require('http');
+var Url      = require('url');
 var Allocine = require('allocine-api');
 var Parser   = require('./Utils/parsing.js');
-var Server   = Http.createServer(function(request, response) {
+var Movie    = require('./Process/movie.js');
+var Person   = require('./Process/person.js');
 
-  function insertData(db,data)
-  {
-    // db.Insert(result);
+var Server = Http.createServer();
+
+Server.on('request', (request, response) => {
+  response.writeHead(200);
+  response.write('This is Mindar\n');
+  
+  var query = Url.parse(request.url, true).query;
+
+  if (query.movie === undefined && query.person === undefined) {
+    response.write('You should give movie or person');
+  } else {
+    if (query.movie) {
+      response.write("You're looking for the movie : " + query.movie);
+
+      var result;
+      Movie.index(query.movie).then(res => {
+        result = res;
+        console.log(result);
+      });
+      
+    } else {
+      response.write("You're looking for the person : " + query.person);
+
+      var result = Person.index(query.person);
+      console.log(result);
+    }
   }
 
-  function processFilmData(film)
-  {
-    var result;
-    Allocine.api('search', {q: film, filter: 'movie'}, function(error, results) {
-      if(error) { console.log('Error : '+ error); return; }
-
-      result = results.feed;
-      var parsed = Parser.parseResult(result);
-      insertData('db1',result)
-      insertData('db2', parsed);
-
-    return parsed;
-
-    });
-  }
-
-  processFilmData('star wars');
-
+  response.end();
 });
 
 Server.listen(8080);
