@@ -1,13 +1,15 @@
 {
-	"name": "mindar-bot",
-	"version": "1.0.0",
-	"main": "index.js",
-	"author": "mindar",
+	"name"      : "mindar-bot",
+	"version"   : "1.0.0",
+	"private"   : true,
+	"main"      : "index.js",
+	"author"    : "mindar",
 	"repository": {
 		"type": "git",
 		"url" : "https://github.com/damnedx/mindar-bot.git"
 	},
 	"dependencies": {
-		"allocine-api": "0.1.9"
+		"allocine-api": "0.1.9",
+		"mongodb"     : "^2.2.24"
 	}
 }
