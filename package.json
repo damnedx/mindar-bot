@@ -8,6 +8,7 @@
 		"url" : "https://github.com/damnedx/mindar-bot.git"
 	},
 	"dependencies": {
-		"allocine-api": "0.1.9"
+		"allocine-api": "0.1.9",
+		"jquery" 	  : "^3.1.0"
 	}
 }
