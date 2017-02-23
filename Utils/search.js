@@ -16,8 +16,8 @@ var search = function() {
     }
 
     // Seeks a data in a "tree" object
-    // Ex: bpm.data(usecase, 'feed.movie', 'no')
-    this.getData = function (data, search, notFoundValue) {
+    // Ex: getObjectdata(usecase, 'feed.movie', 'no')
+    this.getObjectData = function (data, search, notFoundValue) {
         var tree  = search.split('.');
         var found = this.recursiveVariableSearch(data, tree);
 

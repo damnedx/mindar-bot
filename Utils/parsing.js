@@ -7,7 +7,7 @@ var parsing = function() {
     //    var item = {
     //      originalTitle: movie.originalTitle,
     //      title        : movie.title,
-    //      releaseDate  : Search.getData(movie, "release.releaseDate")
+    //      releaseDate  : Search.getObjectData(movie, "release.releaseDate")
     //    };
     //    console.log(item);
     // });
