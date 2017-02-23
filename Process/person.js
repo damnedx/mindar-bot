@@ -1,18 +1,17 @@
 var Allocine = require('allocine-api');
 var Parser   = require('../Utils/parsing.js');
+var Search   = require('../Utils/search.js');
+
 var person = function() {
 
-	this.index = function (name) {
-		var promise = new Promise(
+    this.index = function (name) {
+        var promise = new Promise(
             function(resolve, reject) {
-                 Allocine.api('search', {q: name, filter: 'person'}, function(error, results) {
-                  if(error) { console.log('Error : '+ error); return; }
-                    resolve(Parser.parseMovie(results.feed));
+                Search.getData('person', name).then(res => {
+                    resolve(res);
                 });
             }
-           
         );
-
         return promise;
     }
 

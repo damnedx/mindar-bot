@@ -20,12 +20,8 @@ Server.on('request', (request, response) => {
     if (query.movie) {
       response.write("You're looking for the movie : " + query.movie);
 
-      var result;
-      Movie.index(query.movie).then(res => {
-        result = res;
-        var dbMovie = new DBOperations('url');
-        // dbMovie.insert();
-
+      var result = Movie.index(query.movie).then(res => {
+        console.log(res);
       });
       
     } else {
