@@ -11,7 +11,7 @@ var Server = Http.createServer();
 Server.on('request', (request, response) => {
   response.writeHead(200);
   response.write('This is Mindar\n');
-  
+
   var query = Url.parse(request.url, true).query;
 
   if (query.movie === undefined && query.person === undefined) {
@@ -23,12 +23,12 @@ Server.on('request', (request, response) => {
       var result = Movie.index(query.movie).then(res => {
         console.log(res);
       });
-      
+
     } else {
       response.write("You're looking for the person : " + query.person);
-      var result = Person.index(query.person);
-      var dbPerson = new DBOperations('url');
-      dbPerson.inser();
+      var result = Person.index(query.person).then(res => {
+        console.log(res);
+      });
     }
   }
 
