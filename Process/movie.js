@@ -9,6 +9,8 @@ var movie = function() {
             function(resolve, reject) {
                 Search.getData('movie', name).then(res => {
                     resolve(res);
+                }).catch(function(e) {
+                    console.error('Promise error ' + e);
                 });
             }
         );

@@ -9,6 +9,8 @@ var person = function() {
             function(resolve, reject) {
                 Search.getData('person', name).then(res => {
                     resolve(res);
+                }).catch(function(e) {
+                    console.error('Promise error ' + e);
                 });
             }
         );

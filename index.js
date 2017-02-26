@@ -22,12 +22,16 @@ Server.on('request', (request, response) => {
 
       var result = Movie.index(query.movie).then(res => {
         console.log(res);
+      }).catch(function(e) {
+        console.error('Promise error ' + e);
       });
 
     } else {
       response.write("You're looking for the person : " + query.person);
       var result = Person.index(query.person).then(res => {
         console.log(res);
+      }).catch(function(e) {
+        console.error('Promise error ' + e);
       });
     }
   }
