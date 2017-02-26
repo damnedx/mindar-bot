@@ -1,6 +1,7 @@
 var Allocine = require('allocine-api');
 var Parser   = require('../Utils/parsing.js');
 var Search   = require('../Utils/search.js');
+var MovieModel = require('../Database/Schemas/movieSchema.js');
 
 var movie = function() {
 
