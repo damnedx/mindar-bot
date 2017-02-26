@@ -34,7 +34,7 @@ var search = function() {
         var promise = new Promise(
             function(resolve, reject) {
                  Allocine.api('search', {q: name, filter: type}, function(error, results) {
-                  if(error) { console.log('Error : '+ error); return; }
+                  if(error) { console.error('Error : '+ error); return; }
                     resolve(results.feed);
                 });
             }

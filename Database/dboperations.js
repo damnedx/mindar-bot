@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 function dboperations() {
   mongoose.connect(url, function (err, res) {
     if (err) {
-      console.log (info_console + 'ERROR connecting to: ' + url + '. ' + err);
+      console.error (info_console + 'ERROR connecting to: ' + url + '. ' + err);
     } else {
       console.log (info_console + 'Succeeded connected to: ' + url);
     }
@@ -18,7 +18,7 @@ function dboperations() {
 dboperations.prototype.insertMovie = function(movie) {
     movie.save(function (err) {
       if (err)
-        console.log (info_console + 'Error insert : ' + err)
+        console.error (info_console + 'Error insert : ' + err)
       else {
         console.log(info_console + 'Inserted movie : ' + movie);
       }
