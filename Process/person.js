@@ -6,16 +6,11 @@ var Search       = require('../Utils/search.js');
 var person = function() {
 
     this.index = function (name) {
-        var promise = new Promise(
-            function(resolve, reject) {
-                resolve(Search.searchData('person', name));
-            }
-        );
-        return promise;
+      return Search.searchData('person', name);
     }
 
     this.store = function (name) {
-        
+
     }
 
 

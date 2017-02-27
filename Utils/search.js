@@ -48,52 +48,18 @@ var search = function() {
     }
 
     this.searchData = function(type, name) {
-        var promise = new Promise(
-            function(resolve, reject) {
-                var params = {q:name, filter: type, count: 1}; // to change
-                $this.fetch('search', params).then(res => {
-                    resolve(res);
-                }).catch(function(e) {
-                    console.error(info_console+'Promise error ' + e);
-                    reject(e);
-                });
-            }
-        );
-
-        return promise;
+      var params = {q:name, filter: type, count: 1}; // to change
+      return $this.fetch('search', params);
     }
 
     this.getMovie = function(code, filter) {
-        var promise = new Promise(
-            function(resolve, reject) {
-                var params = {code:code, filter: filter};
-                $this.fetch('movie', params).then(res => {
-                    // console.log(res);
-                    resolve(res);
-                }).catch(function(e) {
-                    console.error(info_console+'Promise error ' + e);
-                    reject(e);
-                });
-            }
-        );
-
-        return promise;
+        var params = {code:code, filter: filter};
+        return $this.fetch('movie', params);
     }
 
     this.getPerson = function(code, filter) {
-        var promise = new Promise(
-            function(resolve, reject) {
-                var params = {code:code, filter: filter};
-                $this.fetch('person', params).then(res => {
-                    resolve(res);
-                }).catch(function(e) {
-                    console.error(info_console+'Promise error ' + e);
-                    reject(e);
-                });
-            }
-        );
-
-        return promise;
+      var params = {code:code, filter: filter};
+      return $this.fetch('person', params);
     }
 
 	return this;
