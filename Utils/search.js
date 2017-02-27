@@ -39,7 +39,8 @@ var search = function() {
             function(resolve, reject) {
                  Allocine.api(type, params, function(error, results) {
                   if(error) { console.error(info_console+'Api Error : '+ error); reject(error); return; }
-                    resolve(results.feed);
+                    var res = results.feed ? results.feed : results;
+                    resolve(res);
                 });
             }
         );
