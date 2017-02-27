@@ -8,11 +8,7 @@ var person = function() {
     this.index = function (name) {
         var promise = new Promise(
             function(resolve, reject) {
-                Search.searchData('person', name).then(res => {
-                    resolve(res);
-                }).catch(function(e) {
-                    console.error(info_console+'Promise error ' + e);
-                });
+                resolve(Search.searchData('person', name));
             }
         );
         return promise;

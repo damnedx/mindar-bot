@@ -12,11 +12,7 @@ var movie = function() {
     this.index = function (name) {
         var promise = new Promise(
             function(resolve, reject) {
-                Search.searchData('movie', name).then(res => {
-                    resolve(res);
-                }).catch(function(e) {
-                    console.error(info_console+'Promise error ' + e);
-                });
+              resolve(Search.searchData('movie', name));
             }
         );
         return promise;
