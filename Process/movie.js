@@ -10,12 +10,7 @@ var movie = function() {
     var $this = this;
 
     this.index = function (name) {
-        var promise = new Promise(
-            function(resolve, reject) {
-              resolve(Search.searchData('movie', name));
-            }
-        );
-        return promise;
+        return Search.searchData('movie', name);
     }
 
     this.store = function (name, database) {
@@ -27,7 +22,7 @@ var movie = function() {
                   for (var i = 0; i < res.movie.length; i++) {
                       movieCodes.push(res.movie[i].code);
                   }
-                  
+
                   movieCodes = Parser.uniqueArray(movieCodes);
                   for (var i = 0; i < movieCodes.length; i++) {
                     Search.getMovie(movieCodes[i], "person").then(people => {
