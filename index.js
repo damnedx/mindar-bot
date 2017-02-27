@@ -5,7 +5,7 @@ var Parser         = require('./Utils/parsing.js');
 var Movie          = require('./Process/movie.js');
 var Person         = require('./Process/person.js');
 var DBOperations   = require('./Database/dboperations.js');
-
+var Search         = require('./Utils/search.js');
 var Server = Http.createServer();
 
 Server.on('request', (request, response) => {
@@ -20,11 +20,12 @@ Server.on('request', (request, response) => {
     if (query.movie) {
       response.write("You're looking for the movie : " + query.movie);
 
-      var result = Movie.index(query.movie).then(res => {
+      /*var result = Movie.index(query.movie).then(res => {
         console.log(res);
       }).catch(function(e) {
         console.error('Promise error ' + e);
-      });
+      });*/
+      Movie.index(query.movie);
       // Movie.store(query.movie).then(res => {
       //   // console.log("store", res);
       // }).catch(function(e) {

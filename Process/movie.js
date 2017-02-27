@@ -9,10 +9,35 @@ var MovieModel     = require('../Database/Schemas/movieSchema.js');
 var movie = function() {
 
     this.index = function (name) {
-        return Search.searchData('movie', name);
+      Search.searchData('movie', name).then(res => {
+
+        var allMovies = res.movie;
+        var movieCodes = new Array();
+
+        for (var i = 0; i < res.movie.length; i++) {
+            movieCodes.push(res.movie[i].code);
+        }
+        movieCodes = Parser.uniqueArray(movieCodes);
+        getAllMoviesFromCodes(movieCodes);
+      }).catch(function(e) {
+        console.error(info_console +  'Promise error ' + e);
+      });
+
     }
 
-    this.store = function (name, database) {
+    var getAllMoviesFromCodes = function(movieCodes){
+      var MovieModel = new Array();
+      for (var i = 0; i < movieCodes.length; i++) {
+        Search.getMovie(movieCodes[i], "person").then(movie => {
+          MovieModel.push(movie);
+        }).catch(function(e) {
+          console.error(info_console +  'Promise error ' + e);
+        });
+      }
+    }
+
+    this.store = function (movie, database) {
+      /*
       this.index(name).then(res => {
           var movieCodes = new Array();
           for (var i = 0; i < res.movie.length; i++) {
@@ -28,7 +53,7 @@ var movie = function() {
 
         }).catch(function(e) {
           console.error(info_console+'Promise error ' + e);
-        });
+        });*/
 
     }
 
