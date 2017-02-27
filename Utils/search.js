@@ -1,6 +1,9 @@
+var info_console   = "[SEARCH] ";
 var Allocine       = require('allocine-api');
 
 var search = function() {
+    var $this = this;
+
 	this.recursiveVariableSearch = function (data, vars) {
         // Catching PHP flavor :-°
         if (data == null) {
@@ -30,15 +33,64 @@ var search = function() {
         return found;
     }
 
-    this.getData = function(type, name) {
+
+    this.fetch = function(type, params) {
         var promise = new Promise(
             function(resolve, reject) {
-                 Allocine.api('search', {q: name, filter: type}, function(error, results) {
-                  if(error) { console.error('Error : '+ error); return; }
+                 Allocine.api(type, params, function(error, results) {
+                  if(error) { console.error(info_console+'Api Error : '+ error); reject(error); return; }
                     resolve(results.feed);
                 });
             }
-           
+        );
+
+        return promise;
+    }
+
+    this.searchData = function(type, name) {
+        var promise = new Promise(
+            function(resolve, reject) {
+                var params = {q:name, filter: type, count: 1}; // to change
+                $this.fetch('search', params).then(res => {
+                    resolve(res);
+                }).catch(function(e) {
+                    console.error(info_console+'Promise error ' + e);
+                    reject(e);
+                });
+            }
+        );
+
+        return promise;
+    }
+
+    this.getMovie = function(code, filter) {
+        var promise = new Promise(
+            function(resolve, reject) {
+                var params = {code:code, filter: filter};
+                $this.fetch('movie', params).then(res => {
+                    // console.log(res);
+                    resolve(res);
+                }).catch(function(e) {
+                    console.error(info_console+'Promise error ' + e);
+                    reject(e);
+                });
+            }
+        );
+
+        return promise;
+    }
+
+    this.getPerson = function(code, filter) {
+        var promise = new Promise(
+            function(resolve, reject) {
+                var params = {code:code, filter: filter};
+                $this.fetch('person', params).then(res => {
+                    resolve(res);
+                }).catch(function(e) {
+                    console.error(info_console+'Promise error ' + e);
+                    reject(e);
+                });
+            }
         );
 
         return promise;

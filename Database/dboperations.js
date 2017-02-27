@@ -1,7 +1,7 @@
 var mongoose = require ("mongoose");
 
 var url = "mongodb://localhost/Mindar-dev";
-var info_console = "[DATABASE]";
+var info_console = "[DATABASE] ";
 mongoose.Promise = global.Promise;
 // connect to database (single instance for all the app)
 function dboperations() {

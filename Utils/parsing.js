@@ -1,5 +1,5 @@
 var Search   = require('./search.js');
-var parsing = function() {
+var parsing  = function() {
 
   this.parseMovie = function (elements){
     var result = array();
@@ -13,8 +13,7 @@ var parsing = function() {
         },
         actors: {names: movie.castingShort.actors}
        };
-       // Ici faire la requete 2 pour récupérer les acteurs avec leur code.
-
+       
        result.push(movieRes);
     });
 
