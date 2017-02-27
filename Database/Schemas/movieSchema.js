@@ -7,10 +7,11 @@ var movieSchema = function() {
        usualTitle: String,
        code: Number
      },
-     actors: {
-       code: Number,
-       name: String
-     }
+     // {
+     //   code: Number,
+     //   name: String
+     // }
+     actors: [Schema.Types.Mixed]
    });
 
    return this;

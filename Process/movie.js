@@ -19,8 +19,15 @@ var movie = function() {
         return promise;
     }
 
-    this.store = function (name) {
+    this.store = function (name, database) {
+        var database = new DBOperations;
+        var result = this.index(query.movie).then(res => {
+            console.log(res);
+            // Ici parse et store
 
+          }).catch(function(e) {
+            console.error('Promise error ' + e);
+          });
     }
 
 	return this;
