@@ -48,3 +48,5 @@ Server.on('request', (request, response) => {
 
 Server.listen(8080);
 console.log("Server is listening");
+
+DBOperations.connect();

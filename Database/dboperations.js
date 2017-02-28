@@ -1,28 +1,39 @@
-var mongoose = require ("mongoose");
+(function(){
+    var client = require('mongodb').MongoClient,
+        mongodb;
 
-var url = "mongodb://localhost/Mindar-dev";
-var info_console = "[DATABASE] ";
-mongoose.Promise = global.Promise;
-// connect to database (single instance for all the app)
-function dboperations() {
-  mongoose.connect(url, function (err, res) {
-    if (err) {
-      console.error (info_console + 'ERROR connecting to: ' + url + '. ' + err);
-    } else {
-      console.log (info_console + 'Succeeded connected to: ' + url);
-    }
-  });
+    var url = "mongodb://localhost/Mindar-dev";
+    var info_console = "[DATABASE] ";
+    module.exports =  {
+        connect: function(callback) {
+            client.connect(url, function(err, db){
+                if(err){
+                  console.error(info_console + 'couldnt connect to : ' + url);
+                }
+                else{
+                  mongodb = db;
+                  console.log(info_console + 'connected to : ' + url);
+                  if(callback) {
+                     callback();
+                   }
+                }
+            });
+        },
+        db: function() {
+            return mongodb;
+        },
+        insert: function(database, data){
+          mongodb.collection(database).insert(data, null, function (error, results) {
+            if (error){
+              console.error(info_console + "couldn't insert data in : " + database + ", " + error );
+            }
+            else
+              console.log(info_console + "doccument added successfully");
+          });
 
-}
-
-dboperations.prototype.insertMovie = function(movie) {
-    movie.save(function (err) {
-      if (err)
-        console.error (info_console + 'Error insert : ' + err)
-      else {
-        console.log(info_console + 'Inserted movie : ' + movie);
-      }
-    });
-}
-
-module.exports = dboperations;
+        },
+        close: function() {
+            mongodb.close();
+        }
+    };
+})();
