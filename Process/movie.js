@@ -7,7 +7,7 @@ var DBOperations   = require('../Database/dboperations.js');
 var MovieModel     = require('../Database/Schemas/movieSchema.js');
 
 var movie = function() {
-
+    
     this.index = function (name) {
       Search.searchData('movie', name).then(res => {
 
@@ -26,14 +26,19 @@ var movie = function() {
     }
 
     var getAllMoviesFromCodes = function(movieCodes){
+      var database = new DBOperations();
       var MovieModel = new Array();
+      var counter = 0;
+      var promiseArray = new Array();
       for (var i = 0; i < movieCodes.length; i++) {
-        Search.getMovie(movieCodes[i], "person").then(movie => {
-          MovieModel.push(movie);
-        }).catch(function(e) {
-          console.error(info_console +  'Promise error ' + e);
-        });
+        promiseArray.push(Search.getMovie(movieCodes[i], "person"));
       }
+
+      Promise.all(promiseArray).then(movie => {
+        database.insertMovie(movie);
+        // $this.database.insertMovie(movie);
+        //MovieModel.push(movie);
+      });
     }
 
     this.store = function (movie, database) {
