@@ -19,8 +19,17 @@ var movie = function() {
             movieCodes.push(res.movie[i].code);
         }
         movieCodes = Parser.uniqueArray(movieCodes);
-
-        getAllMoviesFromCodes(movieCodes);
+        var counter = 0;
+        for (var i = 0; i < movieCodes.length; i++) {
+          Search.getMovie(movieCodes[i], "person").then(res => {
+            var data = JSON.stringify(res);
+            data = data.replace(/"\$":/g, '"type":');
+            DBOperations.insertMovie(collection, JSON.parse(data));
+          }).catch(function(e) {
+            
+          });
+        }
+        //getAllMoviesFromCodes(movieCodes);
       }).catch(function(e) {
         console.error(info_console +  'Promise error ' + e);
       });

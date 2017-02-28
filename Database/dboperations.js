@@ -22,13 +22,13 @@
         db: function() {
             return mongodb;
         },
-        insert: function(database, data){
+        insertMovie: function(database, data){
           mongodb.collection(database).insert(data, null, function (error, results) {
             if (error){
               console.error(info_console + "couldn't insert data in : " + database + ", " + error );
             }
             else
-              console.log(info_console + "doccument added successfully");
+              console.log(info_console + "doccument : " + data.movie.title  + " added  in : " + database);
           });
 
         },
