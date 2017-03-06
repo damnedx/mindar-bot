@@ -49,7 +49,7 @@ var search = function() {
     }
 
     this.searchData = function(type, name) {
-      var params = {q:name, filter: type, count: 200}; // to change
+      var params = {q:name, filter: type, count: 200};
       return $this.fetch('search', params);
     }
 

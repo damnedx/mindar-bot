@@ -9,7 +9,7 @@ var MovieModel     = require('../Database/Schemas/movieSchema.js');
 var collection = "Movies";
 var movie = function() {
 
-    this.index = function (name) {
+    this.store = function (name) {
       Search.searchData('movie', name).then(res => {
 
         var allMovies = res.movie;
@@ -48,27 +48,6 @@ var movie = function() {
         data = data.replace(/"\$":/g, '"type":');
         DBOperations.insert(collection, JSON.parse(data));
       });
-    }
-
-    this.store = function (movie, database) {
-      /*
-      this.index(name).then(res => {
-          var movieCodes = new Array();
-          for (var i = 0; i < res.movie.length; i++) {
-              movieCodes.push(res.movie[i].code);
-          }
-
-          movieCodes = Parser.uniqueArray(movieCodes);
-          for (var i = 0; i < movieCodes.length; i++) {
-            Search.getMovie(movieCodes[i], "person").then(people => {
-              // console.log(people);
-            })
-          }
-
-        }).catch(function(e) {
-          console.error(info_console+'Promise error ' + e);
-        });*/
-
     }
 
 	return this;

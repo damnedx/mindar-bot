@@ -20,18 +20,7 @@ Server.on('request', (request, response) => {
     if (query.movie) {
       response.write("You're looking for the movie : " + query.movie);
 
-      /*var result = Movie.index(query.movie).then(res => {
-        console.log(res);
-      }).catch(function(e) {
-        console.error('Promise error ' + e);
-      });*/
-      Movie.index(query.movie);
-      // Movie.store(query.movie).then(res => {
-      //   // console.log("store", res);
-      // }).catch(function(e) {
-      //   console.error('Promise error ' + e);
-      // });
-
+      Movie.store(query.movie);
 
     } else {
       response.write("You're looking for the person : " + query.person);
