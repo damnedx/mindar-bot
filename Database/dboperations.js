@@ -1,3 +1,5 @@
+var Search         = require('../Utils/search.js');
+
 (function(){
     var client = require('mongodb').MongoClient,
         mongodb;
@@ -28,7 +30,7 @@
               console.error(info_console + "couldn't insert data in : " + database + ", " + error );
             }
             else
-              console.log(info_console + "doccument : " + data.movie.title  + " added  in : " + database);
+              console.log(info_console + "doccument : " + Search.getObjectData(data, "movie.title", "--")  + " added  in : " + database);
           });
 
         },
