@@ -6,7 +6,9 @@ var mongoose       = require ("mongoose");
 var DBOperations   = require('../Database/dboperations.js');
 var MovieModel     = require('../Database/Schemas/movieSchema.js');
 
-var collection = "Movies";
+var collectionProd     = "Movies";
+var collectionArchive  = "MoviesArchive";
+
 var movie = function() {
 
     this.store = function (name) {
@@ -24,7 +26,24 @@ var movie = function() {
           Search.getMovie(movieCodes[i], "person").then(res => {
             var data = JSON.stringify(res);
             data = data.replace(/"\$":/g, '"type":');
-            DBOperations.insertMovie(collection, JSON.parse(data));
+            data = JSON.parse(data);
+            
+            var dataProd = {
+              movie : {
+                code           : data.movie.code,
+                movieType      : data.movie.movieType,
+                originalTitle  : data.movie.originalTitle,
+                title          : data.movie.title,
+                keywords       : data.movie.keywords,
+                productionYear : data.movie.productionYear,
+                castMember     : data.movie.castMember,
+              } 
+            };
+
+
+            DBOperations.insertMovie(collectionProd, dataProd);
+            DBOperations.insertMovie(collectionArchive, data);
+
           }).catch(function(e) {
             
           });
@@ -33,7 +52,6 @@ var movie = function() {
       }).catch(function(e) {
         console.error(info_console +  'Promise error ' + e);
       });
-
     }
 
     var getAllMoviesFromCodes = function(movieCodes){
