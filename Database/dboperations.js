@@ -34,6 +34,10 @@ var Search         = require('../Utils/search.js');
           });
 
         },
+        // To be called like this : exists().then(...)
+        exists: function(database, criteria) {
+            return mongodb.collection(database).find(criteria).limit(1).count();
+        },
         close: function() {
             mongodb.close();
         }

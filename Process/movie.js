@@ -13,17 +13,23 @@ var movie = function() {
 
     this.store = function (name) {
       Search.searchData('movie', name).then(res => {
-
-        var allMovies = res.movie;
-        var movieCodes = new Array();
-
-        for (var i = 0; i < res.movie.length; i++) {
-            movieCodes.push(res.movie[i].code);
-        }
-        movieCodes = Parser.uniqueArray(movieCodes);
         var counter = 0;
-        for (var i = 0; i < movieCodes.length; i++) {
-          Search.getMovie(movieCodes[i], "person").then(res => {
+        for (var i = 0; i < res.movie.length; i++) {
+          ///////// Uncomment me to show bug
+          // DBOperations.exists(collectionProd, {code: res.movie[i].code}).then( (cnt) => {
+            // if (cnt == 0) {
+              // console.log(i); // Problem here, takes always i = res.movie.length
+              this.insert(res.movie[i].code)
+            // }
+          // });
+        }
+      }).catch(function(e) {
+        console.error(info_console +  'Promise error ' + e);
+      });
+    }
+
+        this.insert = function(movieCode) {
+          Search.getMovie(movieCode, "person").then(res => {
             var data = JSON.stringify(res);
             data = data.replace(/"\$":/g, '"type":');
             data = JSON.parse(data);
@@ -47,11 +53,6 @@ var movie = function() {
           }).catch(function(e) {
             
           });
-        }
-        //getAllMoviesFromCodes(movieCodes);
-      }).catch(function(e) {
-        console.error(info_console +  'Promise error ' + e);
-      });
     }
 
     var getAllMoviesFromCodes = function(movieCodes){
