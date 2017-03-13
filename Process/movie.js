@@ -5,14 +5,13 @@ var Request        = require('request');
 var Slug           = require('slug');
 var Parser         = require('../Utils/parsing.js');
 var Search         = require('../Utils/search.js');
-var mongoose       = require ("mongoose");
 var DBOperations   = require('../Database/dboperations.js');
 var MovieModel     = require('../Database/Schemas/movieSchema.js');
 
 var collectionProd     = "Movies";
 var collectionArchive  = "MoviesArchive";
 
-var actorsPath = "data/actors/";
+var actorsPath = "./data/actors/";
 
 var movie = function() {
 
@@ -70,6 +69,7 @@ var movie = function() {
 
     this.downloadActorPicture = function(person) {
       var slug = Slug(person.code + '-' + person.name);
+      var $this = this;
       if (person.href == null || person.name == null || person.code == null) {
         console.error(info_console + "can't save person");
       } else {
@@ -78,7 +78,9 @@ var movie = function() {
           if (err) {
             Fs.mkdir(actorsPath + slug, function(mkdirError) {
               Request.get({url: person.href, encoding: 'binary'}, function (err, response, body) {
-                Fs.writeFile(actorsPath, body, 'binary', function(err) {
+                var fileName = $this.nbDirectoryFiles(actorsPath + slug) + ".jpg";
+      
+                Fs.writeFile(actorsPath + slug + "/" + fileName, body, 'binary', function(err) {
                   if(err)
                     console.error(info_console + err);
                   else
@@ -92,6 +94,19 @@ var movie = function() {
         });
       }
     }
+
+    this.nbDirectoryFiles = function (path) {
+      var result = 0;
+      Fs.readdir(".", (err, files) => {
+        if (files == undefined) {
+          return result;
+        }
+        files.forEach(file => {
+          result++;
+        });
+      })
+      return result;
+    } 
 
 	return this;
 }
