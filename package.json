@@ -9,9 +9,10 @@
 		"url" : "https://github.com/damnedx/mindar-bot.git"
 	},
 	"dependencies": {
-		"allocine-api": "0.1.9",
-		"mongodb"     : "^2.2.24",
-		"slug"        : "*",
-		"request"     : "*"
+		"allocine-api"  : "0.1.9",
+		"mongodb"       : "^2.2.24",
+		"slug"          : "*",
+		"request"       : "*",
+		"google-images" : "*"
 	}
 }
