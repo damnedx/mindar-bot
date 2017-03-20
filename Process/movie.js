@@ -77,16 +77,7 @@ var movie = function() {
         Fs.stat(actorsPath + slug, function (err, stats){
           if (err) {
             Fs.mkdir(actorsPath + slug, function(mkdirError) {
-              Request.get({url: person.href, encoding: 'binary'}, function (err, response, body) {
-                var fileName = $this.nbDirectoryFiles(actorsPath + slug) + ".jpg";
-      
-                Fs.writeFile(actorsPath + slug + "/" + fileName, body, 'binary', function(err) {
-                  if(err)
-                    console.error(info_console + err);
-                  else
-                    console.log(info_console + "Picture " + slug + " was saved");
-                }); 
-              });
+              $this.downloadPicture(person.href, actorsPath+slug, 'jpg');
             });
           } else {
             console.error(info_console + slug + " picture already in database");
@@ -94,6 +85,21 @@ var movie = function() {
         });
       }
     }
+
+    this.downloadPicture = function(href, folderName, fileType) {
+      var $this = this;
+      Request.get({url: href, encoding: 'binary'}, function (err, response, body) {
+        var fileName = $this.nbDirectoryFiles(folderName) + '.' + fileType;
+
+        Fs.writeFile(folderName + "/" + fileName, body, 'binary', function(err) {
+          if(err)
+            console.error(info_console + err);
+          else
+            console.log(info_console + "Picture " + folderName + " was saved");
+        });
+      });
+    }
+
 
     this.nbDirectoryFiles = function (path) {
       var result = 0;
