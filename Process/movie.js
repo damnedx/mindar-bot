@@ -8,10 +8,13 @@ var Search         = require('../Utils/search.js');
 var DBOperations   = require('../Database/dboperations.js');
 var MovieModel     = require('../Database/Schemas/movieSchema.js');
 
-var collectionProd     = "Movies";
-var collectionArchive  = "MoviesArchive";
 
-var actorsPath = "./data/actors/";
+const collectionProd     = "Movies";
+const collectionArchive  = "MoviesArchive";
+const actorsPath = "./data/actors/";
+const GoogleImages = require('google-images');
+const client = new GoogleImages('002457975200317802418:mralf101yxq', 'AIzaSyDopcvtX6GdX0euj2V3eB4yf-XlrM3zz9k');
+ 
 
 var movie = function() {
 
@@ -56,6 +59,7 @@ var movie = function() {
               href : Search.getObjectData(element, "picture.href", null),
             };
             this.downloadActorPicture(person);
+            return;
           }
         });
 
@@ -78,6 +82,13 @@ var movie = function() {
           if (err) {
             Fs.mkdir(actorsPath + slug, function(mkdirError) {
               $this.downloadPicture(person.href, actorsPath+slug, 'jpg');
+              client.search(person.name)
+              .then(images => {
+                  for (var i = 0; i < images.length; i++) {
+                    var type = images[i].split("/");
+                    $this.downloadPicture(images[i].url, type[1]);
+                  }
+              });
             });
           } else {
             console.error(info_console + slug + " picture already in database");
