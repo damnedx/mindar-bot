@@ -85,7 +85,7 @@ var movie = function() {
               client.search(person.name)
               .then(images => {
                   for (var i = 0; i < images.length; i++) {
-                    var type = images[i].split("/");
+                    var type = images[i].type.split("/");
                     $this.downloadPicture(images[i].url, type[1]);
                   }
               });
