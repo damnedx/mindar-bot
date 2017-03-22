@@ -86,7 +86,7 @@ var movie = function() {
               .then(images => {
                   for (var i = 0; i < images.length; i++) {
                     var type = images[i].type.split("/");
-                    $this.downloadPicture(images[i].url, type[1]);
+                    $this.downloadPicture(images[i].url, actorsPath+slug,type[1]);
                   }
               });
             });
