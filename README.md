@@ -1,4 +1,4 @@
-#Mindar data grabbing
+# Mindar data grabbing
 
 > Assuming that $mbot contains mindar-bot
 
