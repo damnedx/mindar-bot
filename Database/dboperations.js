@@ -30,7 +30,7 @@ var Search         = require('../Utils/search.js');
               console.error(info_console + "couldn't insert data in : " + database + ", " + error );
             }
             else
-              console.log(info_console + "doccument : " + Search.getObjectData(data, "title", "--")  + " added  in : " + database);
+              console.log(info_console + "document : " + Search.getObjectData(data, "title", "--")  + " added  in : " + database);
           });
 
         },

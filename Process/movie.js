@@ -86,6 +86,7 @@ var movie = function() {
         Fs.stat(actorsPath + slug, function (err, stats){
           if (err) {
             Fs.mkdir(actorsPath + slug, function(mkdirError) {
+
               $this.downloadPicture(person.href, actorsPath+slug, 'jpg');
                   flickr('photos.search', { text:person.name,sort: 'relevance', extras:'url_o' }, function (error, response) {
                   console.log(info_console+' Getting from FLICKR ' + person.name);
@@ -110,7 +111,11 @@ var movie = function() {
     this.downloadPicture = function(href, folderName, fileType) {
       var $this = this;
       Request.get({url: href, encoding: 'binary'}, function (err, response, body) {
-        var fileName = $this.nbDirectoryFiles(folderName) + '.' + fileType;
+        // var fileName = $this.nbDirectoryFiles(folderName) + '.' + fileType;
+        for (var i = href.length; href[i] != "/"; i--)
+        {}
+        var fileName = href.substring(i+1);// + '.' + fileType;
+
         console.log(info_console+'fileName ' + fileName+'; href' + href);
         Fs.writeFile(folderName + "/" + fileName, body, 'binary', function(err) {
           if(err)
