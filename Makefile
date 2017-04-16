@@ -1,3 +1,4 @@
 ac:
-	rm -rf data/actors
+	rm -rf data
+	mkdir data
 	mkdir data/actors
