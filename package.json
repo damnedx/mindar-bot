@@ -13,6 +13,6 @@
 		"mongodb"       : "^2.2.24",
 		"slug"          : "*",
 		"request"       : "*",
-		"google-images" : "*"
+		"flickr-client" : "*"
 	}
 }

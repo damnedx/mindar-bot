@@ -12,9 +12,10 @@ var MovieModel     = require('../Database/Schemas/movieSchema.js');
 const collectionProd     = "Movies";
 const collectionArchive  = "MoviesArchive";
 const actorsPath = "./data/actors/";
-const GoogleImages = require('google-images');
-const client = new GoogleImages('002457975200317802418:mralf101yxq', 'AIzaSyDopcvtX6GdX0euj2V3eB4yf-XlrM3zz9k');
- 
+
+var flickr = require('flickr-client')({
+  key: '6b0d396b148f0c1ba87b84e2e7fc1526',
+});
 
 var movie = function() {
 
@@ -74,21 +75,30 @@ var movie = function() {
     this.downloadActorPicture = function(person) {
       var slug = Slug(person.code + '-' + person.name);
       var $this = this;
-      if (person.href == null || person.name == null || person.code == null) {
-        console.error(info_console + "can't save person");
+      if (person.href == null) {
+        console.error(info_console + 'person.href == null')
+      } else if (person.name == null) {
+        console.error(info_console + 'person.name == null');
+      } else if (person.code == null) {
+        console.error(info_console + 'person.code == null');
       } else {
         var path = actorsPath + slug;
         Fs.stat(actorsPath + slug, function (err, stats){
           if (err) {
             Fs.mkdir(actorsPath + slug, function(mkdirError) {
               $this.downloadPicture(person.href, actorsPath+slug, 'jpg');
-              client.search(person.name)
-              .then(images => {
-                  for (var i = 0; i < images.length; i++) {
-                    var type = images[i].type.split("/");
-                    $this.downloadPicture(images[i].url, actorsPath+slug,type[1]);
-                  }
-              });
+                  flickr('photos.search', { text:person.name,sort: 'relevance', extras:'url_o' }, function (error, response) {
+                  console.log(info_console+' Getting from FLICKR ' + person.name);
+                  response.photos.photo.forEach(obj => {
+                    var urlo = obj.url_o;
+                    if (urlo) {
+                      for (var i = urlo.length; urlo[i] != '.'; i--) 
+                      {}
+                      var extension = urlo.substring(i+1);
+                      $this.downloadPicture(urlo, actorsPath+slug, extension);
+                    }
+                  });
+                });
             });
           } else {
             console.error(info_console + slug + " picture already in database");
@@ -101,7 +111,7 @@ var movie = function() {
       var $this = this;
       Request.get({url: href, encoding: 'binary'}, function (err, response, body) {
         var fileName = $this.nbDirectoryFiles(folderName) + '.' + fileType;
-
+        console.log(info_console+'fileName ' + fileName+'; href' + href);
         Fs.writeFile(folderName + "/" + fileName, body, 'binary', function(err) {
           if(err)
             console.error(info_console + err);
@@ -122,6 +132,7 @@ var movie = function() {
           result++;
         });
       })
+
       return result;
     } 
 
